@@ -1,0 +1,21 @@
+<?php $lang = $this->lang; ?>
+<?=$this->messages; ?>
+<div class="tl_formbody">
+	<form method="post" class="tl_form">
+		<input type="hidden" name="FORM_SUBMIT" value="marxup_chex">
+		<input type="hidden" name="REQUEST_TOKEN" value="<?=REQUEST_TOKEN ?>">
+		
+		<div class="widget" style="padding-top: 10px;">
+		  <h3><label for="licensekey" class="mandatory"><span class="invisible">Pflichtfeld </span>Lizenzkey<span class="mandatory">*</span></label></h3>
+		  <input type="text" name="licensekey" id="licensekey" class="tl_text mandatory" value="" required="" maxlength="255" onfocus="Backend.getScrollOffset()">
+		</div>
+		
+		<div class="tl_submit_container">
+			<input type="submit" class="tl_submit" name="addlicense" value="<?=$lang['saveLicense']; ?>" />
+		</div>
+	</form>
+</div>
+
+<div id="chexconfig">
+	<iframe src="https://shop.marxup.com/?origin=contao" style="height: 4000px; border:0px; width: 100%;;"></iframe>
+</div>

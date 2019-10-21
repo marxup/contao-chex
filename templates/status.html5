@@ -1,0 +1,95 @@
+<?php $lang = $this->lang; ?>
+<style>
+	#chexstatus th{
+		text-align: center;
+	}
+	
+</style>
+<div id="chexstatus">
+<?=$this->messages; ?>
+<?php if (empty($this->status['error'])) : ?>
+<div class="tl_header click2edit toggle_select hover-div">
+	<table class="tl_header_table">
+		<tbody>
+			<tr>
+				<th colspan="2">
+					<br />
+					<h1><a href="<?=$this->status['general']['url']; ?>" target="_blank" rel="noopener"><?=$this->status['general']['name']; ?></a></h1>
+					<br />
+				</th>
+			</tr>
+			
+			<tr>
+				<td>
+					<span class="tl_label">
+						<?=$lang['telegramqrcode']; ?><br />
+						<small><?=$lang['telegramdesc']; ?></small>
+					</span>
+				</td>
+				<td><img src="<?=$this->status['telegramqr']; ?>" title="<?=$lang['telegramqrcode']; ?>" style="width: 100px; height: 100px;" /></td>
+			</tr>
+			
+			<tr>
+				<th colspan="2">
+					<br />
+					<h1><?=$lang['lastbackup']; ?></h1>
+				</th>
+			</tr>
+			
+			<tr>
+				<td>
+					<span class="tl_label"><?=$lang['lastbackup']; ?></span>
+				</td>
+				<td style="<?=($this->status['lastautobackup']['isrunning']) ? 'background-color:green;' : ''; ?>">
+					<?php 
+						if ($this->status['lastautobackup']['isrunning'])
+							echo $lang['backupactive'];
+						else
+							echo date('d.m.Y H:i', $this->status['lastautobackup']['ended']);
+					?>
+				</td>
+			</tr>
+				
+				
+			<tr>
+				<td>
+					<span class="tl_label"><?=$lang['backupDatabasesize']; ?></span>
+				</td>
+				<td><?=round(($this->status['lastautobackup']['storage']['db']['overall'] / 1024) / 1024, 2); ?> M</td>
+			</tr>
+			<tr>
+				<td>
+					<span class="tl_label"><?=$lang['backupFilesize']; ?></span>
+				</td>
+				<td><?=round(($this->status['lastautobackup']['storage']['files']['overall'] / 1024) / 1024, 2); ?> M</td>
+			</tr>
+			
+			<tr>
+				<td>
+					<span class="tl_label"><?=$lang['lastmanualbackup']; ?></span>
+				</td>
+				<td style="<?=($this->status['lastmanualbackup']['isrunning'] || $this->status['lastmanualbackup']['isplanned']) ? 'background-color:green;' : ''; ?>">
+					<?php 
+						if ($this->status['lastmanualbackup']['isrunning'] || $this->status['lastmanualbackup']['isplanned'])
+						{
+							echo $lang['backupactive'];
+						}
+						else
+						{
+							echo date('d.m.Y H:i', $this->status['lastmanualbackup']['ended']);
+							?>
+								<form method="post">
+									<input type="hidden" name="REQUEST_TOKEN" value="<?=REQUEST_TOKEN ?>" />
+									<input type="submit" name="newmanualbackup" value="<?=$lang['create']; ?>" />
+								</form>
+							<?php
+						}
+					?>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<?php endif; ?>
+<?php require(__DIR__ . '/removelicense.html5'); ?>
+</div>
